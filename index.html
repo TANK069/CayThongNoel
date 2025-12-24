@@ -108,21 +108,26 @@
         /* Typography */
         h1 {
             color: #fceea7;
-            font-size: clamp(24px, 8vw, 56px);
+            font-size: 8vw;
+            max-size: 56px;
             margin: 0;
             font-weight: 400;
-            letter-spacing: clamp(2px, 1.5vw, 6px);
+            letter-spacing: 6px;
             text-shadow: 0 0 50px rgba(252, 238, 167, 0.6);
             background: linear-gradient(to bottom, #fff, #eebb66);
             -webkit-background-clip: text;
-            background-clip: text;
             -webkit-text-fill-color: transparent;
             font-family: 'Cinzel', 'Times New Roman', serif;
             opacity: 0.9;
             transition: opacity 0.5s ease;
             text-align: center;
             pointer-events: none;
-            padding: 0 10px;
+        }
+
+        @media (min-width: 768px) {
+            h1 {
+                font-size: 56px;
+            }
         }
 
         /* Controls */
@@ -185,21 +190,13 @@
         }
 
         .hint-text {
-            color: rgba(212, 175, 55, 0.6);
-            font-size: clamp(8px, 2vw, 10px);
-            letter-spacing: 0.5px;
+            color: rgba(212, 175, 55, 0.5);
+            font-size: 9px;
+            letter-spacing: 1px;
             text-transform: uppercase;
             text-align: right;
             margin-top: 5px;
-            max-width: 100%;
-            line-height: 1.4;
-            padding: 0 5px;
-        }
-
-        #firebase-status {
-            display: block;
-            margin-bottom: 4px;
-            font-size: clamp(7px, 1.8vw, 9px);
+            max-width: 200px;
         }
 
         input[type="file"] {
@@ -216,52 +213,44 @@
         /* Mode Buttons (Bottom) - New for Touch */
         #mode-bar {
             position: absolute;
-            bottom: clamp(20px, 5vh, 30px);
+            bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
-            gap: clamp(12px, 3vw, 15px);
+            gap: 15px;
             z-index: 20;
             pointer-events: auto;
-            padding: 0 10px;
         }
 
         .mode-btn {
-            width: clamp(45px, 12vw, 55px);
-            height: clamp(45px, 12vw, 55px);
-            min-width: 45px;
-            min-height: 45px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
-            background: rgba(0, 0, 0, 0.7);
-            border: 2px solid #d4af37;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid #d4af37;
             color: #d4af37;
-            font-size: clamp(18px, 5vw, 22px);
+            font-size: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             transition: all 0.3s;
             backdrop-filter: blur(4px);
-            touch-action: manipulation;
-            -webkit-tap-highlight-color: transparent;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
         }
 
-        .mode-btn:active,
-        .mode-btn:focus {
-            transform: scale(0.85);
+        .mode-btn:active {
+            transform: scale(0.9);
             background: #d4af37;
             color: #000;
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
         }
 
         /* Webcam feedback */
         #webcam-wrapper {
             position: absolute;
-            bottom: clamp(90px, 20vh, 120px);
-            left: clamp(10px, 2vw, 20px);
-            width: clamp(100px, 25vw, 140px);
-            height: clamp(75px, 18vw, 105px);
+            bottom: 100px;
+            left: 20px;
+            width: 120px;
+            height: 90px;
             border: 1px solid rgba(212, 175, 55, 0.5);
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.9);
             border-radius: 4px;
@@ -282,85 +271,15 @@
 
         #debug-info {
             position: absolute;
-            bottom: clamp(5px, 1vh, 8px);
-            left: 50%;
-            transform: translateX(-50%);
-            color: rgba(212, 175, 55, 0.7);
-            font-size: clamp(9px, 2.2vw, 11px);
+            bottom: 5px;
+            left: 5px;
+            color: rgba(212, 175, 55, 0.6);
+            font-size: 10px;
             font-family: monospace;
             pointer-events: none;
             z-index: 51;
-            width: 90%;
+            width: 100%;
             text-align: center;
-            padding: 0 10px;
-        }
-
-        /* Mobile optimizations */
-        @media (max-width: 768px) {
-            .controls-wrapper {
-                top: 10px;
-                right: 10px;
-            }
-
-            .btn-group {
-                max-width: 180px;
-            }
-
-            /* Ẩn một số controls không cần thiết trên mobile */
-            #folder-input {
-                display: none;
-            }
-
-            label[for="folder-input"] {
-                display: none;
-            }
-
-            h1 {
-                font-size: 28px;
-                padding-top: 10px;
-            }
-
-            #ui-layer {
-                padding-top: 20px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .control-btn {
-                font-size: 8px;
-                padding: 10px 12px;
-            }
-
-            .hint-text {
-                font-size: 7px;
-            }
-
-            #mode-bar {
-                bottom: 15px;
-                gap: 10px;
-            }
-
-            .mode-btn {
-                width: 42px;
-                height: 42px;
-                font-size: 18px;
-            }
-        }
-
-        /* Landscape mobile */
-        @media (max-height: 500px) and (orientation: landscape) {
-            h1 {
-                font-size: 20px;
-                margin: 0;
-            }
-
-            .controls-wrapper {
-                top: 5px;
-            }
-
-            #mode-bar {
-                bottom: 10px;
-            }
         }
 
         /* Message Box */
@@ -378,120 +297,6 @@
             display: none;
             border-radius: 8px;
             min-width: 200px;
-        }
-
-        /* Welcome Screen - Nhập Tên */
-        #welcome-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at center, #0f2027 0%, #203a43 50%, #2c5364 100%);
-            background-color: #050d1a;
-            z-index: 1000;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            transition: opacity 0.5s ease-out;
-        }
-
-        #welcome-screen.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .welcome-content {
-            background: rgba(0, 0, 0, 0.8);
-            border: 2px solid #d4af37;
-            border-radius: 15px;
-            padding: clamp(30px, 5vw, 50px);
-            text-align: center;
-            max-width: 90%;
-            width: 400px;
-            box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
-        }
-
-        .welcome-title {
-            color: #fceea7;
-            font-size: clamp(24px, 5vw, 36px);
-            margin-bottom: 20px;
-            font-family: 'Cinzel', 'Times New Roman', serif;
-            text-shadow: 0 0 20px rgba(252, 238, 167, 0.6);
-        }
-
-        .welcome-subtitle {
-            color: rgba(212, 175, 55, 0.8);
-            font-size: clamp(14px, 3vw, 18px);
-            margin-bottom: 30px;
-        }
-
-        .name-input-wrapper {
-            margin: 25px 0;
-        }
-
-        .name-input {
-            width: 100%;
-            padding: 15px 20px;
-            background: rgba(20, 20, 20, 0.8);
-            border: 2px solid rgba(212, 175, 55, 0.5);
-            border-radius: 8px;
-            color: #d4af37;
-            font-size: 18px;
-            text-align: center;
-            font-family: 'Times New Roman', serif;
-            transition: all 0.3s;
-            box-sizing: border-box;
-        }
-
-        .name-input:focus {
-            outline: none;
-            border-color: #d4af37;
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
-            background: rgba(30, 30, 30, 0.9);
-        }
-
-        .name-input::placeholder {
-            color: rgba(212, 175, 55, 0.4);
-        }
-
-        .welcome-btn {
-            background: rgba(212, 175, 55, 0.8);
-            border: 2px solid #d4af37;
-            color: #000;
-            padding: 15px 40px;
-            font-size: 16px;
-            font-weight: bold;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-top: 20px;
-            font-family: 'Times New Roman', serif;
-        }
-
-        .welcome-btn:hover {
-            background: #d4af37;
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
-            transform: scale(1.05);
-        }
-
-        .welcome-btn:active {
-            transform: scale(0.98);
-        }
-
-        @media (max-width: 480px) {
-            .welcome-content {
-                padding: 25px;
-                width: 85%;
-            }
-
-            .name-input {
-                padding: 12px 15px;
-                font-size: 16px;
-            }
         }
     </style>
 
@@ -513,19 +318,6 @@
 </head>
 
 <body>
-
-    <!-- Welcome Screen - Nhập Tên -->
-    <div id="welcome-screen">
-        <div class="welcome-content">
-            <h1 class="welcome-title">🎄 Merry Christmas 🎄</h1>
-            <p class="welcome-subtitle">Nhập tên của bạn để bắt đầu</p>
-            <div class="name-input-wrapper">
-                <input type="text" id="user-name-input" class="name-input" placeholder="Nhập tên của bạn" value="Dung"
-                    maxlength="50">
-            </div>
-            <button class="welcome-btn" id="enter-btn">Bắt Đầu</button>
-        </div>
-    </div>
 
     <div id="loader">
         <div class="spinner"></div>
@@ -554,6 +346,10 @@
                     ☁️ Upload to Cloud
                     <input type="file" id="cloud-upload-input" multiple accept="image/*" style="display: none;">
                 </label>
+            </div>
+            <div class="hint-text" id="hint-text">
+                <span id="firebase-status">📡 Using localStorage (Firebase not configured)</span><br>
+                Cloud Images Loaded. Upload to save permanently.
             </div>
         </div>
         <!--
@@ -673,9 +469,7 @@
             focusTarget: null,
             hand: { detected: false, x: 0, y: 0 },
             rotation: { x: 0, y: 0 },
-            touch: { active: false, startX: 0, startY: 0, lastX: 0, lastY: 0 },
-            viewedPhotos: new Set(), // Track những ảnh đã xem
-            userName: '' // Tên người dùng
+            touch: { active: false, startX: 0, startY: 0, lastX: 0, lastY: 0 }
         };
 
         let scene, camera, renderer, composer;
@@ -699,95 +493,28 @@
         //   - @Description: 3D Christmas tree with dual control: AI Hand Gestures + Touch/Mouse Interaction.
         //   - 如需使用或分发，请务必保留此作者声明。
         // --> 
-        // Hàm random ảnh chưa xem
-        function getRandomUnviewedPhoto() {
-            const photos = particleSystem.filter(p => p.type === 'PHOTO');
-            if (photos.length === 0) return null;
-
-            // Lọc những ảnh chưa xem
-            const unviewedPhotos = photos.filter(p => !STATE.viewedPhotos.has(p.mesh.id));
-
-            // Nếu đã xem hết, reset lại danh sách
-            if (unviewedPhotos.length === 0) {
-                STATE.viewedPhotos.clear();
-                // Chọn random từ tất cả ảnh (trừ ảnh hiện tại nếu có)
-                const availablePhotos = photos.filter(p => p.mesh !== STATE.focusTarget);
-                if (availablePhotos.length === 0) {
-                    // Nếu chỉ có 1 ảnh, dùng luôn
-                    return photos[0];
-                }
-                const selected = availablePhotos[Math.floor(Math.random() * availablePhotos.length)];
-                STATE.viewedPhotos.add(selected.mesh.id);
-                return selected;
-            }
-
-            // Chọn random từ ảnh chưa xem
-            const selected = unviewedPhotos[Math.floor(Math.random() * unviewedPhotos.length)];
-            STATE.viewedPhotos.add(selected.mesh.id);
-            return selected;
-        }
-
         window.setMode = (mode) => {
             if (mode === 'FOCUS_RANDOM') {
                 STATE.mode = 'FOCUS';
-                const selectedPhoto = getRandomUnviewedPhoto();
-                if (selectedPhoto) {
-                    STATE.focusTarget = selectedPhoto.mesh;
-                }
+                const photos = particleSystem.filter(p => p.type === 'PHOTO');
+                if (photos.length) STATE.focusTarget = photos[Math.floor(Math.random() * photos.length)].mesh;
             } else {
                 STATE.mode = mode;
-                if (mode === 'TREE') {
-                    STATE.focusTarget = null;
-                }
+                if (mode === 'TREE') STATE.focusTarget = null;
             }
         };
 
-        // Xử lý Welcome Screen
-        function initWelcomeScreen() {
-            const welcomeScreen = document.getElementById('welcome-screen');
-            const nameInput = document.getElementById('user-name-input');
-            const enterBtn = document.getElementById('enter-btn');
-
-            // Kiểm tra xem đã có tên trong localStorage chưa
-            const savedName = localStorage.getItem('userName');
-            if (savedName) {
-                nameInput.value = savedName;
-            }
-
-            // Xử lý khi nhấn Enter trong input
-            nameInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    enterWelcome();
-                }
-            });
-
-            // Xử lý khi nhấn nút Bắt Đầu
-            enterBtn.addEventListener('click', enterWelcome);
-
-            function enterWelcome() {
-                const userName = nameInput.value.trim();
-                if (userName === '') {
-                    nameInput.value = 'Dung';
-                    STATE.userName = 'Dung';
-                } else {
-                    STATE.userName = userName;
-                }
-
-                // Lưu tên vào localStorage
-                localStorage.setItem('userName', STATE.userName);
-
-                // Ẩn welcome screen
-                welcomeScreen.classList.add('hidden');
-
-                // Khởi tạo ứng dụng sau khi ẩn welcome screen
-                setTimeout(() => {
-                    welcomeScreen.style.display = 'none';
-                    init();
-                }, 500);
-            }
-        }
-
         async function init() {
+            // Cập nhật status Firebase
+            const statusEl = document.getElementById('firebase-status');
+            if (isFirebaseEnabled) {
+                statusEl.textContent = '✅ Firebase connected - Sharing enabled!';
+                statusEl.style.color = '#4caf50';
+            } else {
+                statusEl.textContent = '⚠️ Firebase not configured - Using localStorage only';
+                statusEl.style.color = '#ff9800';
+            }
+
             initThree();
             setupEnvironment();
             setupLights();
@@ -860,8 +587,6 @@
                 if (clickedPhoto) {
                     STATE.mode = 'FOCUS';
                     STATE.focusTarget = clickedPhoto.mesh;
-                    // Đánh dấu ảnh này đã xem
-                    STATE.viewedPhotos.add(clickedPhoto.mesh.id);
                 } else {
                     if (STATE.mode === 'FOCUS') {
                         STATE.mode = 'TREE';
@@ -1223,10 +948,12 @@
             if (!files.length) return;
 
             const uploadBtn = document.getElementById('upload-cloud-btn');
+            const hintText = document.getElementById('hint-text');
             const originalText = uploadBtn.innerHTML;
 
             uploadBtn.innerHTML = '⏳ Uploading...';
             uploadBtn.disabled = true;
+            hintText.textContent = `Uploading ${files.length} image(s)...`;
 
             const uploadedUrls = [];
 
@@ -1257,9 +984,10 @@
             uploadBtn.disabled = false;
 
             if (uploadedUrls.length > 0) {
+                hintText.textContent = `✅ ${uploadedUrls.length} image(s) uploaded and saved!`;
                 showMsg(`✅ ${uploadedUrls.length} image(s) saved to cloud!`);
             } else {
-                showMsg('Upload failed. Please try again.');
+                hintText.textContent = 'Upload failed. Please try again.';
             }
 
             // Reset input
@@ -1432,25 +1160,11 @@
             video = document.getElementById('webcam');
             try {
                 const vision = await FilesetResolver.forVisionTasks("https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3/wasm");
-                // Tối ưu cho mobile: dùng CPU nếu GPU không available
-                const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
                 handLandmarker = await HandLandmarker.createFromOptions(vision, {
-                    baseOptions: {
-                        modelAssetPath: `https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task`,
-                        delegate: isMobile ? "CPU" : "GPU" // Mobile thường dùng CPU tốt hơn
-                    },
-                    runningMode: "VIDEO",
-                    numHands: 1
+                    baseOptions: { modelAssetPath: `https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task`, delegate: "GPU" },
+                    runningMode: "VIDEO", numHands: 1
                 });
-                // Tối ưu camera constraints cho mobile
-                const constraints = {
-                    video: {
-                        facingMode: "user",
-                        width: isMobile ? { ideal: 320, max: 640 } : { ideal: 640 },
-                        height: isMobile ? { ideal: 240, max: 480 } : { ideal: 480 },
-                        aspectRatio: { ideal: 4 / 3 }
-                    }
-                };
+                const constraints = { video: { facingMode: "user", width: { ideal: 640 }, height: { ideal: 480 } } };
                 const stream = await navigator.mediaDevices.getUserMedia(constraints);
                 video.srcObject = stream;
                 video.addEventListener("loadeddata", predictWebcam);
@@ -1501,10 +1215,8 @@
                 else if (pinchRatio < 0.35) {
                     if (STATE.mode !== 'FOCUS') {
                         STATE.mode = 'FOCUS';
-                        const selectedPhoto = getRandomUnviewedPhoto();
-                        if (selectedPhoto) {
-                            STATE.focusTarget = selectedPhoto.mesh;
-                        }
+                        const photos = particleSystem.filter(p => p.type === 'PHOTO');
+                        if (photos.length) STATE.focusTarget = photos[Math.floor(Math.random() * photos.length)].mesh;
                     }
                 } else if (extensionRatio > 1.7) { STATE.mode = 'SCATTER'; STATE.focusTarget = null; }
             } else {
@@ -1588,8 +1300,7 @@
         //   - @Description: 3D Christmas tree with dual control: AI Hand Gestures + Touch/Mouse Interaction.
         //   - 如需使用或分发，请务必保留此作者声明。
         // --> 
-        // Khởi tạo Welcome Screen trước
-        initWelcomeScreen();
+        init();
     </script>
 </body>
 

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generator Ảnh Demo - Christmas Tree</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c5364;
+            text-align: center;
+        }
+        .info {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        button {
+            background: #d4af37;
+            color: #000;
+            border: none;
+            padding: 15px 30px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: block;
+            margin: 20px auto;
+            font-weight: bold;
+        }
+        button:hover {
+            background: #ffd966;
+        }
+        .preview {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .preview-item {
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            text-align: center;
+        }
+        .preview-item img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 3px;
+        }
+        .status {
+            text-align: center;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎄 Generator Ảnh Demo</h1>
+        
+        <div class="info">
+            <strong>Hướng dẫn:</strong>
+            <ol>
+                <li>Nhấn nút "Tạo Ảnh Demo" bên dưới</li>
+                <li>5 ảnh demo sẽ được tạo tự động với tên: (1).jpg, (2).jpg, ..., (5).jpg</li>
+                <li>Ảnh sẽ được tải xuống tự động</li>
+                <li>Di chuyển các file vào thư mục <code>images/</code></li>
+                <li>Mở file HTML chính và đổi <code>autoScanLocal: true</code></li>
+            </ol>
+        </div>
+
+        <button onclick="generateDemoImages()">🎨 Tạo Ảnh Demo (5 ảnh)</button>
+        
+        <div id="status"></div>
+        <div id="preview" class="preview"></div>
+    </div>
+
+    <script>
+        function generateDemoImages() {
+            const statusDiv = document.getElementById('status');
+            const previewDiv = document.getElementById('preview');
+            previewDiv.innerHTML = '';
+            statusDiv.innerHTML = '<div class="status">Đang tạo ảnh...</div>';
+
+            const colors = [
+                { bg: '#2c5530', text: '#ffffff', emoji: '🎄' }, // Xanh lá - Cây thông
+                { bg: '#8b0000', text: '#ffffff', emoji: '🎁' }, // Đỏ - Quà
+                { bg: '#1a237e', text: '#ffffff', emoji: '❄️' }, // Xanh dương - Tuyết
+                { bg: '#ffd700', text: '#000000', emoji: '⭐' }, // Vàng - Ngôi sao
+                { bg: '#4a148c', text: '#ffffff', emoji: '🔔' }, // Tím - Chuông
+            ];
+
+            const promises = [];
+
+            colors.forEach((color, index) => {
+                const canvas = document.createElement('canvas');
+                canvas.width = 800;
+                canvas.height = 600;
+                const ctx = canvas.getContext('2d');
+
+                // Vẽ background gradient
+                const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+                gradient.addColorStop(0, color.bg);
+                gradient.addColorStop(1, darkenColor(color.bg, 0.3));
+                ctx.fillStyle = gradient;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                // Vẽ pattern trang trí
+                ctx.fillStyle = rgba(color.text, 0.1);
+                for (let i = 0; i < 20; i++) {
+                    const x = Math.random() * canvas.width;
+                    const y = Math.random() * canvas.height;
+                    const size = Math.random() * 30 + 10;
+                    ctx.beginPath();
+                    ctx.arc(x, y, size, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+
+                // Vẽ emoji lớn ở giữa
+                ctx.font = '200px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(color.emoji, canvas.width / 2, canvas.height / 2 - 50);
+
+                // Vẽ text
+                ctx.font = 'bold 48px Arial';
+                ctx.fillStyle = color.text;
+                ctx.fillText('Merry Christmas', canvas.width / 2, canvas.height / 2 + 150);
+                ctx.font = '32px Arial';
+                ctx.fillText(`Demo Image ${index + 1}`, canvas.width / 2, canvas.height / 2 + 200);
+
+                // Vẽ border
+                ctx.strokeStyle = color.text;
+                ctx.lineWidth = 10;
+                ctx.strokeRect(5, 5, canvas.width - 10, canvas.height - 10);
+
+                // Convert to blob and download
+                canvas.toBlob((blob) => {
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `(${index + 1}).jpg`;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+
+                    // Show preview
+                    const previewItem = document.createElement('div');
+                    previewItem.className = 'preview-item';
+                    previewItem.innerHTML = `
+                        <img src="${url}" alt="Demo ${index + 1}">
+                        <p><strong>(${index + 1}).jpg</strong></p>
+                    `;
+                    previewDiv.appendChild(previewItem);
+                }, 'image/jpeg', 0.9);
+
+                promises.push(new Promise(resolve => {
+                    canvas.toBlob(() => resolve(), 'image/jpeg');
+                }));
+            });
+
+            Promise.all(promises).then(() => {
+                statusDiv.innerHTML = '<div class="status success">✅ Đã tạo xong 5 ảnh demo! Vui lòng kiểm tra thư mục Downloads.</div>';
+            });
+        }
+
+        function darkenColor(color, amount) {
+            const num = parseInt(color.replace("#", ""), 16);
+            const r = Math.max(0, ((num >> 16) & 0xFF) * (1 - amount));
+            const g = Math.max(0, (((num >> 8) & 0xFF) * (1 - amount)));
+            const b = Math.max(0, ((num & 0xFF) * (1 - amount)));
+            return `#${Math.floor(r).toString(16).padStart(2, '0')}${Math.floor(g).toString(16).padStart(2, '0')}${Math.floor(b).toString(16).padStart(2, '0')}`;
+        }
+
+        function rgba(color, alpha) {
+            const num = parseInt(color.replace("#", ""), 16);
+            const r = (num >> 16) & 0xFF;
+            const g = (num >> 8) & 0xFF;
+            const b = num & 0xFF;
+            return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+        }
+    </script>
+</body>
+</html>
+
